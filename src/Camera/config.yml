@@ -4,6 +4,14 @@ module_logger:
     logFilename: "logs.log"
     logFormat: "[%(asctime)s][%(levelname)s][%(threadName)s][%(module)s][Line %(lineno)d] %(message)s"
 ---
+goProHero10:
+    #https://gopro.github.io/OpenGoPro/http#section/Setup
+    serialNr: "C3464280021547"
+    serialNrX: 5
+    serialNrY: 4
+    serialNrZ: 7
+
+---
 module_xyz: 
     pppp: true
     lll: true
