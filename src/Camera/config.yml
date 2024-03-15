@@ -1,0 +1,14 @@
+---
+module_logger:
+    logSubfolder: "logs"
+    logFilename: "logs.log"
+    logFormat: "[%(asctime)s][%(levelname)s][%(threadName)s][%(module)s][Line %(lineno)d] %(message)s"
+---
+module_xyz: 
+    pppp: true
+    lll: true
+    iiii: "abcd"
+    dddd: 300
+    maaa: 3
+    xyz: true
+...

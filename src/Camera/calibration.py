@@ -109,6 +109,8 @@ def save2file(filename, variable):
 #end-def
     
 
+cameraName = "C1_"
+
 fx = cameraMatrix[0][0]
 ox = cameraMatrix[0][2]
 fy = cameraMatrix[1][1]
@@ -119,12 +121,13 @@ print("fy = ", fy)
 print("ox = ", ox)
 print("oy = ", oy)
 
-save2file("fx", fx)
-save2file("fy", fy)
-save2file("ox", ox)
-save2file("oy", oy)
+save2file(cameraName+"fx", fx)
+save2file(cameraName+"fy", fy)
+save2file(cameraName+"ox", ox)
+save2file(cameraName+"oy", oy)
 
 
+with open("cameraMatrix.dat", "+wb") as fid: np.save(fid, cameraMatrix)
 
 
 print(f"ret: {ret}")
@@ -146,6 +149,7 @@ for tvec in tvecs:
 #print(f"translation vectors: {tvecs}")
 
 input(">>>")
+
 """
 # Save the camera calibration result for later use (we won't worry about rvecs / tvecs)
 pickle.dump((cameraMatrix, dist), open( "calibration.pkl", "wb" ))
