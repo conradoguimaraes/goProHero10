@@ -4,31 +4,105 @@ from utils.config import readConfig
 
 
 class goProHero10:
-    # Enable TurboTransfer: gopro.turboTransfer["params"]["p"] = 1
-    #Disable TurboTransfer: gopro.turboTransfer["params"]["p"] = 0
-    turboTransfer = {"mode": "post",
+    #https://gopro.github.io/OpenGoPro/http
+    
+    #Turbo Transfer
+    turboTransfer = {
+                     "mode": "post",
                      "url": "/gopro/media/turbo_transfer",
-                     "params": {"p": 0}
+                     "params": {"p": 0},
+                     "params_info": {
+                                     "p=0 <int>": "disable",
+                                     "p=1 <int>": "enable"
+                                    }
                     }
     
-    # Enable wiredCamera: gopro.wiredCamera["params"]["p"] = 1
-    #Disable wiredCamera: gopro.wiredCamera["params"]["p"] = 0
-    wiredCamera = {"mode": "post",
+    #Wired Camera Control over USB
+    wiredCamera = {
+                   "mode": "post",
                    "url": "/gopro/camera/control/wired_usb",
-                   "params": {"p": 0}
+                   "params": {"p": 0},
+                   "params_info": {
+                                   "p=0 <int>": "disable usb control",
+                                   "p=1 <int>": "enable wired usb control"
+                                  }
                   }
     
     #Keep Alive Signal: gopro.keepAliveSignal()
-    keepAlive = {"mode": "post",
-                 "url": "/gopro/camera/control/keep_alive",
+    keepAlive = {
+                 "mode": "post",
+                 "url": "/gopro/camera/keep_alive",
                 }
+    
+    #Camera Control Status
+    cameraControl = {
+                     "mode": "post",
+                     "url": "/gopro/camera/control/set_ui_controller",
+                     "params": {"p": 0},
+                     "params_info": {
+                                     "p=0 <int>": "CAMERA_IDLE",
+                                     "p=1 <int>": "CAMERA_CONTROL",
+                                     "p=2 <int>": "CAMERA_EXTERNAL_CONTROL"
+                                    }
+                    }
+    
+    #Set Date/Time
+    dateTime = {
+                "mode": "post",
+                "url": "/gopro/camera/set_date_time",
+                "params": {
+                           "date": "2023_12_31",
+                           "time": "16_30_00"
+                          },
+                "params_info": {
+                                "date <str>": "current date in format YYYY_MM_DD",
+                                "time <str>": "current time in format HH_MM_SS in 24 hour format"
+                               }
+               }
+    
+    #Set Digital Zoom
+    digitalZoom = {
+                   "mode": "post",
+                   "url": "/gopro/camera/digital_zoom",
+                   "params": {"percent": 0},
+                   "params_info": {"percent=x <int>": "Set Zoom level of X (0-100)"}
+                  }
+    
+    
+    #Start Shutter
+    shutter = {
+               "mode": "post",
+               "url": "/gopro/camera/shutter/{mode}",
+               "params": {},
+               "params_info": {"mode": "must change in the URL '{mode}' to 'start' or 'stop'"}
+              }
+
+    #Hilight a Media File - Add a hilight / tag to an existing photo or media file
+    hilightMediaFile = "not implemented"
+    
+    #Hilight while recording - Add hilight at current time while recording video (This can only be used during recording.)
+    hilightRecording = "not implemented"
+    
+    #Remove hilight - Remove an existing hilight from a photo or video file.
+    hilightRemove = "not implemented"
+    
+    
+    #Download a Media File
+    shutterStop = {
+                   "mode": "post",
+                   "url": "/videos/DCIM/{directory}/{filename}",
+                   "params": {},
+                   "params_info": {
+                                   "directory": "must change in the URL '{directory}' to the desired directory",
+                                   "filename":  "must change in the URL '{filename}' to the desired filename"
+                                  }
+                  }
+    
     
     def __init__(self, goProHero10Config: str="goProHero10", cameraPort = "8080") -> None:
         config = readConfig(moduleName = goProHero10Config)
         
-        serialX = config["serialNrX"]
-        serialY = config["serialNrY"]
-        serialZ = config["serialNrZ"]
+        serialX, serialY, serialZ = config["serialNrX"], config["serialNrY"], config["serialNrZ"]
         self.cameraPort = cameraPort
         self.cameraAddress = f"172.2{serialX}.1{serialY}{serialZ}.51"  + ":" + self.cameraPort
         self.cameraFullAddress = "http://" + self.cameraAddress
