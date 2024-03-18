@@ -1,5 +1,5 @@
 ---
-module_logger:
+logger:
     logSubfolder: "logs"
     logFilename: "logs.log"
     logFormat: "[%(asctime)s][%(levelname)s][%(threadName)s][%(module)s][Line %(lineno)d] %(message)s"
@@ -12,11 +12,10 @@ goProHero10:
     serialNrZ: 7
 
 ---
-module_xyz: 
-    pppp: true
-    lll: true
-    iiii: "abcd"
-    dddd: 300
-    maaa: 3
-    xyz: true
+camera: 
+    enableDirectShow: false
+    showFPS: false
+    imageSubfolder: images #subfolder of the output images
+    frameWidth: 800
+    frameHeight: 600
 ...

@@ -1,96 +1,147 @@
+import os
 import numpy as np
 import cv2
-#import time
-from timeFunctions import countdown, currentTime
-from getCameras import get_available_cameras
-import os
 
+from utils.config import readConfig
 
-#Get Camera ID:
-cameras = get_available_cameras()
-#list(cameras.keys())[0]
+import time
+from utils.timeFunctions import countdown, currentTime
+from utils.getCameras import get_available_cameras
 
-cameraID = int(input("Desired Camera ID>"))
+#pip install pygrabber==0.1
+from pygrabber.dshow_graph import FilterGraph
 
-error = True
-while error:
-    try:
-        #Force release
-        os.environ['OPENCV_VIDEOIO_PRIORITY_MSMF'] = str(cameraID)
+class camera:
+    def __init__(self, cameraConfig: str="camera", cameraName: str="GoPro Webcam", windowName: str="Frame") -> None:
+        #------------------------------------------------------
+        #Read the Configs
+        self.config = readConfig(moduleName = cameraConfig)
         
-        #--------------
-        #Open Camera and give it some time to open
-        #cap = cv2.VideoCapture('http://192.168.137.190:4747/video')
-        cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
-        countdown(message="Opening Camera")
-        ret, frame = cap.read()
-        cv2.imshow('frame',frame)
-        error = False
-    except:
-        cap.release()
-        pass
-    #end-try-except
-#end-whilw
+        self.enableDirectShow = self.config["enableDirectShow"]
+        self.showFPS          = self.config["showFPS"]
+        self.imageSubfolder   = self.config["imageSubfolder"]
+        self.frameWidth       = self.config["frameWidth"]
+        self.frameHeight      = self.config["frameHeight"]
+        #------------------------------------------------------
+        #Create the Images Subfolder:
+        """
+        self.savePath = os.path.join(os.getcwd(), "images")
+        if (os.path.isdir(self.savePath) is not True):
+            try:
+                os.mkdir(self.savePath)
+            except:
+                pass
+        #end-if-else
+        """
+        #------------------------------------------------------
+        #Get the Camera ID
+        self.cameraID = self.getCameraID(goProName = cameraName)
+        if self.cameraID == -1: raise Exception("'GoPro Webcam' was not found in the available cameras list.")
+        
+        #------------------------------------------------------
+        #Start the Camera with/without Direct Shows
+        self.cap = cv2.VideoCapture(self.cameraID, cv2.CAP_DSHOW)
+        """
+        if (self.enableDirectShow):
+            self.cap = cv2.VideoCapture(self.cameraID, cv2.CAP_DSHOW)
+        else:
+            self.cap = cv2.VideoCapture(self.cameraID)
+        """
+        #end-if-else
+        #Add some delay to give time for the camera setup
+        countdown(delay = 3, message="Opening Camera")
+        #------------------------------------------------------
+        
+        self.windowName = windowName
+        
+        
+    #end-def
+    
+    
+    def display(self):
+        ret, frame = self.cap.read()
+        
+        if self.showFPS:
+            new_frame_time = currentTime()
+            # fps will be number of frame processed in given time frame 
+            # since their will be most of time error of 0.001 second 
+            # we will be subtracting it to get more accurate result 
+            
+            fps = 1/(new_frame_time-prev_frame_time) 
+            prev_frame_time = new_frame_time
+        
+            # converting the fps into integer (remove decimals)
+            fps = int(fps) 
+        
+            # converting the fps to string so that we can display it on frame by using putText function 
+            fps = str(fps) 
+            
+            font = cv2.FONT_HERSHEY_SIMPLEX 
+            cv2.putText(frame, fps, (7, 70), font, 3, (100, 255, 0), 3, cv2.LINE_AA) 
+        #end-if-else
+        
+        
+        cv2.imshow(self.windowName, frame)
+        key = cv2.waitKey(1)
+        if key == 27: #ESC Key to exit
+            pass
+        
+    #end-def
+    
+    
+    def changeFrameSize(self) -> None:
+        cv2.resizeWindow(self.windowName, 
+                         self.frameWidth,
+                         self.frameHeight) 
+        return
+    #end-def
+    
+    def getCameraID(self, goProName: str="") -> int:
+        cameras = self.get_available_cameras()
+        for cameraID, cameraName in cameras.items():
+            if (cameraName.lower() == goProName.lower()):
+                return cameraID
+            else:
+                pass
+            #end-if-else
+        #end-for
+        return -1
+    #end-def
+    
+    def get_available_cameras(self) -> dict:
+        #https://stackoverflow.com/questions/70886225/get-camera-device-name-and-port-for-opencv-videostream-python
+        devices = FilterGraph().get_input_devices()
 
+        available_cameras = {}
 
+        for device_index, device_name in enumerate(devices):
+            available_cameras[device_index] = device_name
+        #end-for
+        
+        print(available_cameras)
+        return available_cameras
+    #end-def
+    
+#end-class
 
-#--------------
-savePath = os.path.join(os.getcwd(), "images")
-if (os.path.isdir(savePath) is not True):
-    try:
-        os.mkdir(savePath)
-    except:
-        pass
+if __name__ == "__main__":
+    # cap = cv2.VideoCapture(0)
+    # countdown(delay=3, message="Opening Camera")
+    # while(cap.isOpened()):
+    #     ret, frame = cap.read()
+    #     cv2.imshow('frame',frame)
+    #     key = cv2.waitKey(1)
+    #     if key == 27: #ESC Key to exit
+    #         break
+    
+    # cap.release()
+    # cv2.destroyAllWindows()
+    goProCamera = camera()
+    while(goProCamera.cap.isOpened()):
+        goProCamera.display()
+        # key = cv2.waitKey(1)
+        # if key == 27: #ESC Key to exit
+        #     break
+    goProCamera.cap.release()
+    cv2.destroyAllWindows()
 #end-if-else
-
-newImagePrefix = "img_"
-newImageExtension = ".png"
-maxLeadingZeros = 4
-
-
-#1280, 1024
-cap.set(cv2.CAP_PROP_FRAME_WIDTH, 800)
-cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 600)
-
-
-prev_frame_time = 0
-new_frame_time = 0
-
-imgCounter = 0
-while(cap.isOpened()):
-    ret, frame = cap.read()
-    #gray = cv2.resize(gray, (500, 300)) 
-    
-    #new_frame_time = currentTime()
-    # fps will be number of frame processed in given time frame 
-    # since their will be most of time error of 0.001 second 
-    # we will be subtracting it to get more accurate result 
-    
-    #fps = 1/(new_frame_time-prev_frame_time) 
-    #prev_frame_time = new_frame_time
-  
-    # converting the fps into integer 
-    #fps = int(fps) 
-  
-    # converting the fps to string so that we can display it on frame by using putText function 
-    #fps = str(fps) 
-    
-    
-    #font = cv2.FONT_HERSHEY_SIMPLEX 
-    #cv2.putText(frame, fps, (7, 70), font, 3, (100, 255, 0), 3, cv2.LINE_AA) 
-    cv2.imshow('frame',frame)
-    
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-    elif cv2.waitKey(5) == ord('s'): # wait for 's' key to save and exit
-        filename = newImagePrefix + (maxLeadingZeros - len(str(imgCounter)))*"0"+str(imgCounter) + newImageExtension
-        filePath = os.path.join(savePath, filename)
-        
-        cv2.imwrite(filePath, frame)
-        print("image saved!")
-        imgCounter += 1
-    #end-if-else
-#end-while
-
-cap.release()
-cv2.destroyAllWindows()
