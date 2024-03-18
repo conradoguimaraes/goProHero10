@@ -29,6 +29,12 @@ class goProHero10:
     downloadMediaFile     = goProHTTPMediaVars.downloadMediaFile
     downloadLastMediaFile = goProHTTPMediaVars.downloadLastMediaFile
     
+    #Query Vars:
+    
+    #Capability Vars:
+    
+    #Webcam Vars:
+    
     def __init__(self, goProHero10Config: str="goProHero10", cameraPort = "8080") -> None:
         config = readConfig(moduleName = goProHero10Config)
         
