@@ -1,5 +1,5 @@
-from camera import camera
 import cv2
+from camera import camera
 
 goProCamera = camera()
 while(goProCamera.cap.isOpened()):

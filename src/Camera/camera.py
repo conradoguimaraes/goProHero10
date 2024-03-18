@@ -24,7 +24,6 @@ class camera:
         self.frameHeight      = self.config["frameHeight"]
         #------------------------------------------------------
         #Create the Images Subfolder:
-        """
         self.savePath = os.path.join(os.getcwd(), "images")
         if (os.path.isdir(self.savePath) is not True):
             try:
@@ -32,7 +31,6 @@ class camera:
             except:
                 pass
         #end-if-else
-        """
         #------------------------------------------------------
         #Get the Camera ID
         self.cameraID = self.getCameraID(goProName = cameraName)
@@ -40,18 +38,22 @@ class camera:
         
         #------------------------------------------------------
         #Start the Camera with/without Direct Shows
-        self.cap = cv2.VideoCapture(self.cameraID, cv2.CAP_DSHOW)
-        """
+        #self.cap = cv2.VideoCapture(self.cameraID, cv2.CAP_DSHOW)
         if (self.enableDirectShow):
             self.cap = cv2.VideoCapture(self.cameraID, cv2.CAP_DSHOW)
         else:
             self.cap = cv2.VideoCapture(self.cameraID)
-        """
+
         #end-if-else
         #Add some delay to give time for the camera setup
         countdown(delay = 3, message="Opening Camera")
         #------------------------------------------------------
-        
+        if (self.showFPS):
+            self.prev_frame_time = 0
+            self.new_frame_time = 0
+            self.fps = 0
+        #end-if-else
+        #------------------------------------------------------
         self.windowName = windowName
         
         
@@ -62,19 +64,17 @@ class camera:
         ret, frame = self.cap.read()
         
         if self.showFPS:
-            new_frame_time = currentTime()
+            self.new_frame_time = currentTime()
             # fps will be number of frame processed in given time frame 
             # since their will be most of time error of 0.001 second 
             # we will be subtracting it to get more accurate result 
             
-            fps = 1/(new_frame_time-prev_frame_time) 
-            prev_frame_time = new_frame_time
-        
-            # converting the fps into integer (remove decimals)
-            fps = int(fps) 
-        
+            fps = 1/(self.new_frame_time - self.prev_frame_time) 
+            self.prev_frame_time = self.new_frame_time
+
+            self.fps = int(fps)
             # converting the fps to string so that we can display it on frame by using putText function 
-            fps = str(fps) 
+            fps = str(self.fps)
             
             font = cv2.FONT_HERSHEY_SIMPLEX 
             cv2.putText(frame, fps, (7, 70), font, 3, (100, 255, 0), 3, cv2.LINE_AA) 
@@ -125,23 +125,5 @@ class camera:
 #end-class
 
 if __name__ == "__main__":
-    # cap = cv2.VideoCapture(0)
-    # countdown(delay=3, message="Opening Camera")
-    # while(cap.isOpened()):
-    #     ret, frame = cap.read()
-    #     cv2.imshow('frame',frame)
-    #     key = cv2.waitKey(1)
-    #     if key == 27: #ESC Key to exit
-    #         break
-    
-    # cap.release()
-    # cv2.destroyAllWindows()
-    goProCamera = camera()
-    while(goProCamera.cap.isOpened()):
-        goProCamera.display()
-        # key = cv2.waitKey(1)
-        # if key == 27: #ESC Key to exit
-        #     break
-    goProCamera.cap.release()
-    cv2.destroyAllWindows()
+    pass
 #end-if-else
