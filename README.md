@@ -30,7 +30,8 @@ sequenceDiagram
 
    main->>camera: start live feed
    camera->>GoPro Hero 10: start USB communication
-   
+   GoPro Hero 10->>camera: camera is available and ready
+
    loop while live feed is available
      camera->>GoPro Hero 10: capture image
      GoPro Hero 10->>camera: return captured image
