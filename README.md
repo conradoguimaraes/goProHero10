@@ -1,13 +1,22 @@
 # GO PRO HERO 10
 
+## Table of Contents
+- [Sequence Diagram](#sequence-diagram)
+    - [Elements](#elements)
+    - [Diagram](#diagram)
+- [Webcam constraints](#webcam-constraints)
+- [Useful Links](useful-links)
+
 
 ## **Sequence Diagram**
 
-Elements:
+### Elements:
 - **main** (`main.py`): main script
 - **goProHero10 API** (`goProHero10.py`): _goProHero10 class_ that handles the HTTP communication with the GoPro Hero 10 Camera (Hardware)
 - **camera** (`camera.py`): _class_ that implements and handles, through _openCV_, the live feed, keypress events, image processing, etc;
 - **GoPro Hero 10**: hardware
+
+### Diagram
 
 ```mermaid
 sequenceDiagram
@@ -39,4 +48,54 @@ sequenceDiagram
    end
     
 ```
+
+## Webcam constraints
+
+From [GoPro Support](https://community.gopro.com/s/article/GoPro-Webcam?language=en_US):
+```
+Webcam Mode resolution limitations: "Here you can choose between [1080p] (default) or [720p]."
+
+    Webcam Resolution
+    ID 	Resolution 	Supported Cameras
+    4 	480p 	Hero 10 Black, Hero 9 Black
+    7 	720p 	Hero 12 Black, Hero 9 Black, Hero 10 Black, Hero 11 Black
+    12 	1080p 	Hero 12 Black, Hero 9 Black, Hero 10 Black, Hero 11 Black
+
+    Webcam Field-of-View
+    ID 	FOV 	Supported Cameras
+    0 	Wide 	Hero 12 Black, Hero 9 Black, Hero 10 Black, Hero 11 Black
+    2 	Narrow 	Hero 12 Black, Hero 9 Black, Hero 10 Black, Hero 11 Black
+    3 	Superview 	Hero 12 Black, Hero 9 Black, Hero 10 Black, Hero 11 Black
+    4 	Linear 	Hero 12 Black, Hero 9 Black, Hero 10 Black, Hero 11 Black
+```
+## Preview Stream (not supported on GoPro Hero 10)
+
+```
+When the preview stream is started, the camera starts up a UDP client and begins writing MPEG Transport Stream data to the client on port 8554. In order to stream this data, the client must implement a UDP connection that binds to the same port and decode the data.
+
+**Start Preview Stream**
+
+Supported Protocols:
+USB
+WIFI
+
+query Parameters
+port, integer
+Example: port=8556
+
+Port to use for Preview Stream. Defaults to 8554 if not set
+
+Not supported on:
+    Hero 11 Black Mini
+    Hero 11 Black
+    **Hero 10 Black**
+    Hero 9 Black
+
+
+```
+
+## Useful Links:
+
+- Open GoPro HTTP API: [OpenGoPro/HTTP](https://gopro.github.io/OpenGoPro/http)
+- GoPro Support webpage: [GoPro-Webcam](https://community.gopro.com/s/article/GoPro-Webcam?language=en_US)
 
