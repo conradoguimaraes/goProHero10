@@ -1,6 +1,7 @@
 *.bat
 *.pkl
 .blank.py
+.old
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
