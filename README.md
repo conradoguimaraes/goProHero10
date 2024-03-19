@@ -32,12 +32,9 @@ sequenceDiagram
    
    loop (live feed is available)
      camera->>GoPro Hero 10: capture image
+     GoPro Hero 10->>camera: return captured image
      camera->>main: image preview
    end
     
 ```
 
-
-loop Every minute
-        John-->Alice: Great!
-    end
