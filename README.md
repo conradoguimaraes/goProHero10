@@ -1,20 +1,56 @@
 # GO PRO HERO 10
 
+This repository contains source code that enables communication with the GoPro Hero 10 Black camera through HTTP requests and provides functionality to query and control various camera parameters. Additionally, it includes a class that utilizes OpenCV for live previewing of the camera feed and allows for manipulation of visualization parameters.
+
+<br>
+
 ## Table of Contents
+- [Getting Started](#getting-started)
 - [GoPro Hero 10 Black](#gopro-hero-10-black)
-    - [Battery Specs](#battery-specs)
-    - [Video Specs](#video-specs)
-- [Sequence Diagram](#sequence-diagram)
-    - [Elements](#elements)
-    - [Diagram](#diagram)
+   * [Battery Specs](#battery-specs)
+   * [Video Specs](#video-specs)
+      + [Aspect Ratio](#aspect-ratio)
+      + [Digital Lenses](#digital-lenses)
+      + [Resolutions](#resolutions)
 - [Webcam Constraints](#webcam-constraints)
 - [Preview Stream](#preview-stream)
+- [Webcam Sequence Diagram](#webcam-sequence-diagram)
+   * [Elements:](#elements)
+   * [Diagram](#diagram)
 - [Useful Links](#useful-links)
+
+<br>
+
+## Features
+
+- **GoPro Hero 10 Webcam Control Class** [`goProHero10.py`](https://github.com/conradoguimaraes/goProHero10/blob/main/src/Camera/goProHero10.py): implements HTTP communication with the GoPro Hero 10 Black camera, enabling retrieval of camera values and parameter adjustment.
+
+- **OpenCV Live Feed Preview Class** [`camera.py`](https://github.com/conradoguimaraes/goProHero10/blob/main/src/Camera/camera.py): Utilizes OpenCV to provide real-time previewing of the webcam feed. Users can explore techniques such as edge detection, image segmentation, and others according to specific tasks, requirements, or desired results.
+
+
+<br>
+
+## Getting Started
+
+To get started with using the classes provided in this repository, follow these steps:
+
+- Clone the repository to your local machine:
+```bash
+    git clone https://github.com/yourusername/gopro-hero10-opencv.git
+```
+
+- Ensure you have the necessary dependencies installed. This may include Python, OpenCV `pip install opencv-python`, and any additional libraries required for HTTP communication with the GoPro camera.
+
+- Explore the provided classes and example usage within the repository to understand how to integrate them into your projects.
+
+
+<br>
+
 
 
 ## GoPro Hero 10 Black
 
-- Product manual: [HERO 10 Black](https://gopro.com/content/dam/help/hero10-black/manuals/HERO10Black_UM_ENG_REVB.pdf) (video/photo specs starting page nr.63/77)
+- Product manual: [HERO 10 Black](https://gopro.com/content/dam/help/hero10-black/manuals/HERO10Black_UM_ENG_REVB.pdf) (video/photo specs starting page nr. 63/77)
 
 <br>
 
@@ -62,52 +98,7 @@ Shooting high-resolution or high-fps video when it’s warm out can cause your c
 ```
 
 
-<br>
 
-<br>
-
-<br>
-
-## **Sequence Diagram**
-
-### Elements:
-- **main** (`main.py`): main script
-- **goProHero10 API** (`goProHero10.py`): _goProHero10 class_ that handles the HTTP communication with the GoPro Hero 10 Camera (Hardware)
-- **camera** (`camera.py`): _class_ that implements and handles, through _openCV_, the live feed, keypress events, image processing, etc;
-- **GoPro Hero 10**: hardware
-
-### Diagram
-
-```mermaid
-sequenceDiagram
-    main->>main: Set desired Resolution/FOV
-    main->>camera: initialize class object
-    main->>goProHero10 API: initialize class object
-    loop while failure exists
-      main->>goProHero10 API: Change {resolution,fov}
-      goProHero10 API->>GoPro Hero 10: HTTP Request: startWebcam{resolution,fov}
-      GoPro Hero 10->>GoPro Hero 10: Try to Adjust Lens
-      GoPro Hero 10->>goProHero10 API: HTTP Response
-      goProHero10 API->>main: Return Code
-      alt failure was detected
-          main->>goProHero10 API: HTTP Request: exitWebcam
-          goProHero10 API->>GoPro Hero 10: turn off Webcam
-          GoPro Hero 10->>goProHero10 API: HTTP Response
-          goProHero10 API->>main: Return Code
-      end
-   end
-
-   main->>camera: start live feed
-   camera->>GoPro Hero 10: start USB communication
-   GoPro Hero 10->>camera: camera is available and ready
-
-   loop while live feed is available
-     camera->>GoPro Hero 10: capture image
-     GoPro Hero 10->>camera: return captured image
-     camera->>main: image preview
-   end
-    
-```
 
 ## Webcam Constraints
 
@@ -155,6 +146,57 @@ Not supported on:
 
 
 ```
+
+
+
+
+<br>
+
+<br>
+
+<br>
+
+## Webcam Sequence Diagram
+
+### Elements:
+- **main** [`main.py`](https://github.com/conradoguimaraes/goProHero10/blob/main/src/Camera/main.py): main script
+- **goProHero10 API** [`goProHero10.py`](https://github.com/conradoguimaraes/goProHero10/blob/main/src/Camera/goProHero10.py): _goProHero10 class_ that handles the HTTP communication with the GoPro Hero 10 Camera (Hardware)
+- **camera** [`camera.py`](https://github.com/conradoguimaraes/goProHero10/blob/main/src/Camera/camera.py): _class_ that implements and handles, through _openCV_, the live feed, keypress events, image processing, etc;
+- **GoPro Hero 10**: hardware
+
+### Diagram
+
+```mermaid
+sequenceDiagram
+    main->>main: Set desired Resolution/FOV
+    main->>camera: initialize class object
+    main->>goProHero10 API: initialize class object
+    loop while failure exists
+      main->>goProHero10 API: Change {resolution,fov}
+      goProHero10 API->>GoPro Hero 10: HTTP Request: startWebcam{resolution,fov}
+      GoPro Hero 10->>GoPro Hero 10: Try to Adjust Lens
+      GoPro Hero 10->>goProHero10 API: HTTP Response
+      goProHero10 API->>main: Return Code
+      alt failure was detected
+          main->>goProHero10 API: HTTP Request: exitWebcam
+          goProHero10 API->>GoPro Hero 10: turn off Webcam
+          GoPro Hero 10->>goProHero10 API: HTTP Response
+          goProHero10 API->>main: Return Code
+      end
+   end
+
+   main->>camera: start live feed
+   camera->>GoPro Hero 10: start USB communication
+   GoPro Hero 10->>camera: camera is available and ready
+
+   loop while live feed is available
+     camera->>GoPro Hero 10: capture image
+     GoPro Hero 10->>camera: return captured image
+     camera->>main: image preview
+   end
+    
+```
+
 
 ## Useful Links
 
