@@ -6,7 +6,7 @@
     - [Diagram](#diagram)
 - [Webcam Constraints](#webcam-constraints)
 - [Preview Stream](#preview-stream)
-- [Useful Links](useful-links)
+- [Useful Links](#useful-links)
 
 
 ## **Sequence Diagram**
