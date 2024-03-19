@@ -4,7 +4,8 @@
 - [Sequence Diagram](#sequence-diagram)
     - [Elements](#elements)
     - [Diagram](#diagram)
-- [Webcam constraints](#webcam-constraints)
+- [Webcam Constraints](#webcam-constraints)
+- [Preview Stream](#preview-stream)
 - [Useful Links](useful-links)
 
 
@@ -49,7 +50,7 @@ sequenceDiagram
     
 ```
 
-## Webcam constraints
+## Webcam Constraints
 
 From [GoPro Support](https://community.gopro.com/s/article/GoPro-Webcam?language=en_US):
 ```
@@ -68,7 +69,9 @@ Webcam Mode resolution limitations: "Here you can choose between [1080p] (defaul
     3 	Superview 	Hero 12 Black, Hero 9 Black, Hero 10 Black, Hero 11 Black
     4 	Linear 	Hero 12 Black, Hero 9 Black, Hero 10 Black, Hero 11 Black
 ```
-## Preview Stream (not supported on GoPro Hero 10)
+## Preview Stream
+
+OBS: **Preview Stream** is not supported on GoPro Hero 10
 
 ```
 When the preview stream is started, the camera starts up a UDP client and begins writing MPEG Transport Stream data to the client on port 8554. In order to stream this data, the client must implement a UDP connection that binds to the same port and decode the data.
