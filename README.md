@@ -25,7 +25,7 @@ This repository contains source code that enables communication with the GoPro H
 
 - **GoPro Hero 10 Webcam Control Class** [`goProHero10.py`](https://github.com/conradoguimaraes/goProHero10/blob/main/src/Camera/goProHero10.py): implements HTTP communication with the GoPro Hero 10 Black camera, enabling retrieval of camera values and parameter adjustment.
 
-- **OpenCV Live Feed Preview Class** [`camera.py`](https://github.com/conradoguimaraes/goProHero10/blob/main/src/Camera/camera.py): Utilizes OpenCV to provide real-time previewing of the webcam feed. Users can explore techniques such as edge detection, image segmentation, and others according to specific tasks, requirements, or desired results.
+- **OpenCV Live Feed Preview Class** [`camera.py`](https://github.com/conradoguimaraes/goProHero10/blob/main/src/Camera/camera.py): utilizes OpenCV to provide real-time previewing of the webcam feed. Users can explore techniques such as edge detection, image segmentation, and others according to specific tasks, requirements, or desired results.
 
 
 <br>
@@ -36,7 +36,7 @@ To get started with using the classes provided in this repository, follow these 
 
 - Clone the repository to your local machine:
 ```bash
-    git clone https://github.com/yourusername/gopro-hero10-opencv.git
+    git clone https://github.com/yourusername/goProHero10.git
 ```
 
 - Ensure you have the necessary dependencies installed. This may include Python, OpenCV `pip install opencv-python`, and any additional libraries required for HTTP communication with the GoPro camera.
