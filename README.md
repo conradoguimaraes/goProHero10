@@ -12,8 +12,8 @@ This repository contains source code that enables communication with the GoPro H
       + [Aspect Ratio](#aspect-ratio)
       + [Digital Lenses](#digital-lenses)
       + [Resolutions](#resolutions)
-- [Webcam Constraints](#webcam-constraints)
-- [Preview Stream](#preview-stream)
+  * [Webcam Constraints](#webcam-constraints)
+  * [Preview Stream](#preview-stream)
 - [Webcam Sequence Diagram](#webcam-sequence-diagram)
    * [Elements:](#elements)
    * [Diagram](#diagram)
@@ -100,7 +100,7 @@ Shooting high-resolution or high-fps video when it’s warm out can cause your c
 
 
 
-## Webcam Constraints
+### Webcam Constraints
 
 From [GoPro Support](https://community.gopro.com/s/article/GoPro-Webcam?language=en_US):
 ```
@@ -119,7 +119,7 @@ Webcam Mode resolution limitations: "Here you can choose between [1080p] (defaul
     3 	Superview 	Hero 12 Black, Hero 9 Black, Hero 10 Black, Hero 11 Black
     4 	Linear 	Hero 12 Black, Hero 9 Black, Hero 10 Black, Hero 11 Black
 ```
-## Preview Stream
+### Preview Stream
 
 OBS: **Preview Stream** is not supported on GoPro Hero 10
 
