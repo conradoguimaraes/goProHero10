@@ -142,25 +142,27 @@ class goProHero10:
         response = requests.get(fullURL, params = parameters)
         if response.status_code == 200:
             data = response.json()
-            print(f"Successful HTTP POST Operation!\n{fullURL}\n>>> DATA:\n{data}\n")
+            print(f"Successful HTTP Operation!\n{fullURL}\n>>> DATA:\n{data}\n")
             return data
         else:
             return -1
         #end-if-else
     #end-def
     
+    """
     def postHTTP(self, paramURL: str="", parameters: dict={}) -> int:
         fullURL = self.cameraFullAddress + paramURL
         
         response = requests.get(fullURL, params = parameters)
         if response.status_code == 200:
-            print(f"Successful HTTP POST Operation!\n>>>{fullURL}\n>>>{parameters}\n")
+            print(f"Successful HTTP Operation!\n>>>{fullURL}\n>>>{parameters}\n")
             return 1
         else:
-            print(f"Error in HTTP POST Operation!\n>>>{fullURL}\n>>>{parameters}\n")
+            print(f"Error in HTTP Operation!\n>>>{fullURL}\n>>>{parameters}\n")
             return -1
         #end-if-else
     #end-def
+    """
     
     
 #end-class

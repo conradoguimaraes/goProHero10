@@ -103,7 +103,14 @@ ret, cameraMatrix, distCoeffs, rvecs, tvecs = cv.calibrateCamera(objpoints, imgp
 
 def save2file(filename, variable):
     if (".dat" not in filename): filename += ".dat"
-    filePath = os.path.join(os.getcwd(), "camera_parameters", filename)
+    savePath = os.path.join(os.getcwd(), "camera_parameters")
+    filePath = os.path.join(savePath filename)
+    if (os.path.isdir(savePath) is not True):
+        try:
+            os.mkdir(savePath)
+        except:
+            pass
+    #end-if-else
     with open(filePath, "w+") as fid: fid.write(str(variable))
     return
 #end-def

@@ -14,7 +14,7 @@ goProHero10:
 ---
 camera: 
     enableDirectShow: true
-    showFPS: true
+    showFPS: false
     imageSubfolder: images #subfolder of the output images
     frameWidth: 800
     frameHeight: 600

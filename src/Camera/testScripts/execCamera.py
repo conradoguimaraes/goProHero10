@@ -8,4 +8,4 @@ while(goProCamera.cap.isOpened()):
     if key == 27: #ESC Key to exit
         break
 goProCamera.cap.release()
-cv2.destroyAllWindows()
+#cv2.destroyAllWindows()

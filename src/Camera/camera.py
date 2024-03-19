@@ -56,13 +56,13 @@ class camera:
         #------------------------------------------------------
         self.windowName = windowName
         
-        
+        self.frame = None
     #end-def
     
     
     def display(self):
-        ret, frame = self.cap.read()
-        
+        ret, self.frame = self.cap.read()
+        self.changeFrameSize()
         if self.showFPS:
             self.new_frame_time = currentTime()
             # fps will be number of frame processed in given time frame 
@@ -77,11 +77,11 @@ class camera:
             fps = str(self.fps)
             
             font = cv2.FONT_HERSHEY_SIMPLEX 
-            cv2.putText(frame, fps, (7, 70), font, 3, (100, 255, 0), 3, cv2.LINE_AA) 
+            cv2.putText(self.frame, fps, (7, 70), font, 3, (100, 255, 0), 3, cv2.LINE_AA) 
         #end-if-else
         
         
-        cv2.imshow(self.windowName, frame)
+        cv2.imshow(self.windowName, self.frame)
         key = cv2.waitKey(1)
         if key == 27: #ESC Key to exit
             pass
@@ -90,9 +90,10 @@ class camera:
     
     
     def changeFrameSize(self) -> None:
+        cv2.namedWindow(self.windowName,cv2.WINDOW_NORMAL)
         cv2.resizeWindow(self.windowName, 
                          self.frameWidth,
-                         self.frameHeight) 
+                         self.frameHeight)
         return
     #end-def
     
