@@ -1,6 +1,9 @@
 # GO PRO HERO 10
 
 ## Table of Contents
+- [GoPro Hero 10 Black](#gopro-hero-10-black)
+    - [Battery Specs](#battery-specs)
+    - [Video Specs](#video-specs)
 - [Sequence Diagram](#sequence-diagram)
     - [Elements](#elements)
     - [Diagram](#diagram)
@@ -8,6 +11,62 @@
 - [Preview Stream](#preview-stream)
 - [Useful Links](#useful-links)
 
+
+## GoPro Hero 10 Black
+
+- Product manual: [HERO 10 Black](https://gopro.com/content/dam/help/hero10-black/manuals/HERO10Black_UM_ENG_REVB.pdf) (video/photo specs starting page nr.63/77)
+
+<br>
+
+### Battery Specs
+
+```
+RECORDING WHEN PLUGGED INTO A POWER SOURCE
+You can use the USB-C cable that came with your camera to shoot videos and photos while your camera is plugged in to a USB-charging adapter, the GoPro Supercharger, or other external power source.
+
+This is perfect for capturing long videos and time lapse events.
+
+Be careful not to touch the area near the SD card slot when recording.
+
+Disturbing the SD card could interrupt or stop the recording. Your camera will let you know if this happens. Your content will not be damaged or lost as a result of this disturbance, but you may need to restart your camera to continue.
+
+Even though your camera is charging, the battery will not charge during recording. It will start charging when you stop recording.
+
+You cannot record while your camera is plugged into a computer
+```
+
+Thus, when using the GoPro as a webcam, the battery drains faster than what it is able to charge, while plugged in to 3.0 USB.
+
+<br>
+
+### Video Specs
+
+#### Aspect Ratio
+
+![imagem](https://github.com/conradoguimaraes/goProHero10/assets/98216516/f60bf874-a226-4ecd-a378-bea2ddfc92c9)
+
+<br>
+
+#### Digital Lenses
+
+![imagem](https://github.com/conradoguimaraes/goProHero10/assets/98216516/effc646d-e186-48bc-8b54-f5e00b8fe1b9)
+
+<br>
+
+#### Resolutions
+
+![image01](https://github.com/conradoguimaraes/goProHero10/assets/98216516/ab507b64-e130-4d6f-a973-623c7afe3118)
+
+```
+Shooting high-resolution or high-fps video when it’s warm out can cause your camera to heat up and use more power.
+```
+
+
+<br>
+
+<br>
+
+<br>
 
 ## **Sequence Diagram**
 
