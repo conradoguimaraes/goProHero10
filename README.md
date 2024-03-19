@@ -97,7 +97,7 @@ Not supported on:
 
 ```
 
-## Useful Links:
+## Useful Links
 
 - Open GoPro HTTP API: [OpenGoPro/HTTP](https://gopro.github.io/OpenGoPro/http)
 - GoPro Support webpage: [GoPro-Webcam](https://community.gopro.com/s/article/GoPro-Webcam?language=en_US)
