@@ -5,6 +5,7 @@ This repository contains source code that enables communication with the GoPro H
 <br>
 
 ## Table of Contents
+- [Features](#features)
 - [Getting Started](#getting-started)
 - [GoPro Hero 10 Black](#gopro-hero-10-black)
    * [Battery Specs](#battery-specs)
@@ -36,7 +37,7 @@ To get started with using the classes provided in this repository, follow these 
 
 - Clone the repository to your local machine:
 ```bash
-    git clone https://github.com/yourusername/goProHero10.git
+    git clone https://github.com/conradoguimaraes/goProHero10.git
 ```
 
 - Ensure you have the necessary dependencies installed. This may include Python, OpenCV `pip install opencv-python`, and any additional libraries required for HTTP communication with the GoPro camera.
